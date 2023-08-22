@@ -1,0 +1,24 @@
+Failure for VT-2005 index: 383
+   MMFF not fully available for SMILES: [HH]
+
+Failure for VT-2005 index: 387
+   MMFF not fully available for SMILES: [C-]#[O+]
+
+Failure for VT-2005 index: 1064
+   MMFF not fully available for SMILES: Cl
+
+Failure for VT-2005 index: 1065
+   MMFF not fully available for SMILES: F
+
+Failure for VT-2005 index: 1066
+   MMFF not fully available for SMILES: Br
+
+Failure for VT-2005 index: 1067
+   MMFF not fully available for SMILES: I
+
+Finished checking spDatabase for usage with MMFF atom types.
+   Dataset size: 1426
+   Total number of atoms in dataset: 29902
+   Total number of MMFF atom types in dataset: 50
+   MMFF atom types in dataset: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 35, 37, 38, 39, 40, 42, 43, 44, 45, 59, 61, 63, 64, 65, 66, 70, 71, 72, 74]
+   MMFF atom type counter in dataset: [6455, 622, 429, 116, 16548, 780, 429, 124, 10, 17, 259, 285, 33, 11, 59, 3, 10, 29, 222, 18, 158, 115, 11, 3, 1, 94, 47, 1, 2, 150, 1, 8, 2526, 22, 5, 47, 52, 1, 7, 60, 7, 6, 36, 36, 2, 2, 1, 32, 9, 1]

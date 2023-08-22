@@ -1,0 +1,6 @@
+Finished checking spDatabase for usage with El atom types.
+   Dataset size: 1432
+   Total number of atoms in dataset: 29914
+   Total number of El atom types in dataset: 10
+   El atom types in dataset: [1, 35, 6, 7, 8, 9, 15, 16, 17, 53]
+   El atom type counter in dataset: [17226, 34, 10269, 348, 1376, 260, 14, 89, 286, 12]
