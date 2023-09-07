@@ -390,8 +390,9 @@ plt.rcParams["savefig.pad_inches"] = 0.02
 
 caption='Solubility (25 ºC) /g/kg'
 v=[10**-7,10**5]
-plt.loglog(S_Train_Exp,S_Train_Predicted,'.k',label='Training Set')
-plt.loglog(S_Test_Exp,S_Test_Predicted,'.b',label='Testing Set')
+plt.loglog(S_Train_Exp,S_Train_Predicted,'.k',label='Training Set',
+           markersize=7)
+plt.loglog(S_Test_Exp,S_Test_Predicted,'^b',label='Testing Set',markersize=4)
 plt.loglog(v,v,'-k',linewidth=1)
 plt.xlim(v)
 plt.ylim(v)
@@ -499,7 +500,7 @@ plt.rcParams['font.size'] = 13
 plt.rcParams["savefig.pad_inches"] = 0.02
 
 VT_index=[]
-for n in range(1):
+for n in range(2):
     index=numpy.array(abs(BP_Test_Predicted.reshape(-1,)-BP_Test_Exp)).argmax()
     aux=mlDatabase.loc[mlDatabase['Boiling Temp. /ºC'].astype('float')\
                         ==BP_Test_Exp[index]]
@@ -508,9 +509,10 @@ for n in range(1):
     BP_Test_Predicted=numpy.delete(BP_Test_Predicted,index)
 
 caption='Boiling Temperature /ºC'
-v=[-500,1000]
-plt.plot(BP_Train_Exp,BP_Train_Predicted,'.k',label='Training Set')
-plt.plot(BP_Test_Exp,BP_Test_Predicted,'.b',label='Testing Set')
+v=[-200,500]
+plt.plot(BP_Train_Exp,BP_Train_Predicted,'.k',label='Training Set',
+         markersize=7)
+plt.plot(BP_Test_Exp,BP_Test_Predicted,'^b',label='Testing Set',markersize=4)
 plt.plot(v,v,'-k',linewidth=1)
 plt.xlim(v)
 plt.ylim(v)
