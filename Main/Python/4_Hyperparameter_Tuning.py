@@ -15,7 +15,7 @@ Sections:
         . TuneModelHPs_BO()
     . Main Script
     
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -44,11 +44,11 @@ from skmultilearn.model_selection.iterative_stratification\
 # =============================================================================
 
 # Force Field used for atom typing
-ffType='MMFF' # One of: "El" | "MMFF"| "GAFF"
+ffType='El' # One of: "El" | "MMFF"| "GAFF"
 # Path to HyperparameterSearch Folder
-hpFolder=r'C:\Users\dinis\Desktop\GSP\Main\HyperparameterSearch'
+hpFolder=r'/path/to/Main/HyperparameterSearch'
 # Path to the "Databases" folder
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 
 # =============================================================================
 # Main Functions
@@ -156,7 +156,7 @@ class GCN_Model_SP(tensorflow.keras.models.Model):
         # Unpack architecture
         conv1_channels=architecture.get('conv1_channels')
         conv2_channels=architecture.get('conv2_channels')
-        conv3_channels=architecture.get('conv2_channels')
+        conv3_channels=architecture.get('conv3_channels')
         reg=tensorflow.keras.regularizers.L2(architecture.get('L2 coeff.'))
         ki='he_uniform'
         # Define userLayers list
@@ -357,9 +357,9 @@ best={'conv1_channels': 100,
 for n in range(5):
     # Define architecture hyperparameter space
     hp=keras_tuner.HyperParameters()
-    hp.Int('conv1_channels',0,200)
-    hp.Int('conv2_channels',0,200)
-    hp.Int('conv3_channels',0,200)
+    hp.Int('conv1_channels',0,300)
+    hp.Int('conv2_channels',0,300)
+    hp.Int('conv3_channels',0,300)
     hp.Fixed('L2 coeff.',best.get('L2 coeff.'))
     hp.Fixed('alpha',best.get('alpha'))
     hp.Fixed('batchSize',best.get('batchSize'))

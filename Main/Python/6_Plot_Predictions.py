@@ -14,7 +14,7 @@ Sections:
     . Pred Vs. Exp
     . Assorted Compounds
     
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -46,17 +46,17 @@ RDLogger.DisableLog('rdApp.*')
 # =============================================================================
 
 # Path to Model Folder
-modelFolder=r'C:\Users\dinis\Desktop\GSP\Main\Models'
+modelFolder=r'/path/to/Main/Models'
 # Path to the "Databases" folder
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 # Force Field used for atom typing
 ffType='MMFF' # One of: "El" | "MMFF"| "GAFF"
 # Hyperparameters
 hp={'conv1_channels': 300,
-    'conv2_channels': 300,
-    'conv3_channels': 231,
-    'L2 coeff.': 1e-10,
-    'alpha': 0.0005000455726511215,
+    'conv2_channels': 153,
+    'conv3_channels': 161,
+    'L2 coeff.': 7.786532065816706e-06,
+    'alpha': 0.0015148702467415256,
     'batchSize': 16}
 
 # =============================================================================
@@ -165,7 +165,7 @@ class GCN_Model_SP(tensorflow.keras.models.Model):
         # Unpack architecture
         conv1_channels=architecture.get('conv1_channels')
         conv2_channels=architecture.get('conv2_channels')
-        conv3_channels=architecture.get('conv2_channels')
+        conv3_channels=architecture.get('conv3_channels')
         reg=tensorflow.keras.regularizers.L2(architecture.get('L2 coeff.'))
         ki='he_uniform'
         # Define userLayers list
@@ -289,10 +289,10 @@ def generateGCN(architecture,graphSet_Train,graphSet_Val,verbose=1):
     model.compile(optimizer=optimizer,loss=composite())
     # Create loaders
     loaderTrain=spektral.data.BatchLoader(graphSet_Train,batch_size=batchSize,
-                                          shuffle=True)
+                                          shuffle=False)
     loaderVal=spektral.data.BatchLoader(graphSet_Val,shuffle=False)
     # Define early stopping
-    earlyStop=tensorflow.keras.callbacks.EarlyStopping(patience=1000,
+    earlyStop=tensorflow.keras.callbacks.EarlyStopping(patience=500,
                                                        mode='min',
                                                      restore_best_weights=True)
     # Fit the model
@@ -336,11 +336,11 @@ with open(os.path.join(modelFolder,ffType+'_Y_Test.pkl'),'rb') as f:
 v=[0,150]
 plt.plot(v,v,'--',linewidth=2,c='silver')
 plt.plot(labelTensor_Train.flatten(),
-         Y_Train.flatten(),'.k',markersize=5,label='Training Data')
+         Y_Train.flatten(),'.k',markersize=7,label='Training Data')
 plt.plot(labelTensor_Val.flatten(),
-         Y_Val.flatten(),'.r',markersize=5,label='Validation Data')
+         Y_Val.flatten(),'sr',markersize=3,label='Validation Data')
 plt.plot(labelTensor_Test.flatten(),
-         Y_Test.flatten(),'.b',markersize=5,label='Testing Data')
+         Y_Test.flatten(),'^b',markersize=4,label='Testing Data')
 plt.xlabel(r'Exp. Sigma Profile $\rm/Å^{2}$')
 plt.ylabel(r'Pred. Sigma Profile $\rm/Å^{2}$')
 plt.xlim(v)
@@ -446,7 +446,7 @@ worstIndex2=lossContainer.argmax()
 
 # Find smiles string and VT-2005 index of each case
 spDB=pandas.concat((graphSet_Train.spDataset,
-                    graphSet_Test.spDataset))
+                    graphSet_Test.spDataset),ignore_index=True)
 x=(spDB.iloc[:,2:]-Y_True[bestIndex1].reshape(-1,)).abs().sum(axis=1)
 x=pandas.to_numeric(x).argmin()
 bestVTIndex1=spDB.iloc[x,0]
