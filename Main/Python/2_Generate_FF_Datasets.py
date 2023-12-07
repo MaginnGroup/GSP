@@ -43,7 +43,7 @@ Sections:
     . Main Script: Part 3
     . Main Script: Part 4
 
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -52,7 +52,7 @@ Author: Dinis Abranches
 # =============================================================================
 
 # Path to Databases folder (should contain spDatabase.cs)
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 # Force Field used for atom typing
 ffType='GAFF' # One of: "El" | "MMFF"| "GAFF"
 

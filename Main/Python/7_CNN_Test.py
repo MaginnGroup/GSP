@@ -15,7 +15,7 @@ Sections:
     . Main Script (S_25)
     . Main Script (BP)
     
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -24,17 +24,17 @@ Author: Dinis Abranches
 # =============================================================================
 
 # Path to Model Folder
-modelFolder=r'C:\Users\dinis\Desktop\GSP\Main\Models'
+modelFolder=r'/path/to/Main/Models'
 # Path to the "Databases" folder
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 # Force Field used for atom typing
 ffType='MMFF' # One of: "El" | "MMFF"| "GAFF"
 # Hyperparameters
 hp={'conv1_channels': 300,
-    'conv2_channels': 300,
-    'conv3_channels': 231,
-    'L2 coeff.': 1e-10,
-    'alpha': 0.0005000455726511215,
+    'conv2_channels': 153,
+    'conv3_channels': 161,
+    'L2 coeff.': 7.786532065816706e-06,
+    'alpha': 0.0015148702467415256,
     'batchSize': 16}
 
 # =============================================================================
@@ -151,7 +151,7 @@ class GCN_Model_SP(tensorflow.keras.models.Model):
         # Unpack architecture
         conv1_channels=architecture.get('conv1_channels')
         conv2_channels=architecture.get('conv2_channels')
-        conv3_channels=architecture.get('conv2_channels')
+        conv3_channels=architecture.get('conv3_channels')
         reg=tensorflow.keras.regularizers.L2(architecture.get('L2 coeff.'))
         ki='he_uniform'
         # Define userLayers list
@@ -278,7 +278,7 @@ def generateGCN(architecture,graphSet_Train,graphSet_Val,verbose=1):
                                           shuffle=False)
     loaderVal=spektral.data.BatchLoader(graphSet_Val,shuffle=False)
     # Define early stopping
-    earlyStop=tensorflow.keras.callbacks.EarlyStopping(patience=100,mode='min',
+    earlyStop=tensorflow.keras.callbacks.EarlyStopping(patience=500,mode='min',
                                                      restore_best_weights=True)
     # Fit the model
     hist=model.fit(loaderTrain.load(),

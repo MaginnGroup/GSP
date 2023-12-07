@@ -40,7 +40,7 @@ Sections:
         . readOutmol()
     . Main Script
 
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -49,10 +49,9 @@ Author: Dinis Abranches
 # =============================================================================
 
 # Path to the original VT-2005 database
-originalPath=\
-    r'C:\Users\dinis\Desktop\GSP\Main\Databases\Original_VT_2005'
+originalPath=r'/path/to/Main/Databases/Original_VT_2005'
 # Path to the folder where the new curated dataset is to be saved
-newPath=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+newPath=r'/path/to/Main/Databases'
 # List of Exceptions
 exceptions={'0383':'[HH]',
             '0386':'[O-][N+](=O)[N+]([O-])=O',
@@ -205,17 +204,17 @@ with open(logFilePath,'w') as logFile:
         index=indexFile.iloc[n,0]
         # Convert index to YYYY format
         index=str(index).zfill(4)
+        # Get txt path
+        txtPath=os.path.join(txtFolder,'VT2005-'+index+'-PROF.txt')  
+        # Read sigma profile
+        sp=pandas.read_csv(txtPath,dtype=float,header=None,
+                           delim_whitespace=True)
         # Check if exception
         if index in list(exceptions.keys()):
             SMILES=exceptions[index]
             logFile.write('Manual override for VT-2005 index: '+index)
             logFile.write('\n   SMILES string used: '+SMILES+'\n\n')
         else:
-            # Get txt path
-            txtPath=os.path.join(txtFolder,'VT2005-'+index+'-PROF.txt')  
-            # Read sigma profile
-            sp=pandas.read_csv(txtPath,dtype=float,header=None,
-                               delim_whitespace=True)
             # Get outmol path
             outmolPath=os.path.join(outmolFolder,'VT2005-'+index+'-GO.outmol')
             # Read outmolPath

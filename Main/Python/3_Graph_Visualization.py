@@ -18,7 +18,7 @@ Sections:
         . plotGraph_NetworkX()
     . Main Script
 
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -27,11 +27,11 @@ Author: Dinis Abranches
 # =============================================================================
 
 # Path to the "Databases" folder
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 # Force Field used for atom typing
 ffType='MMFF' # One of: "El" | "MMFF"| "GAFF"
 # Identifier of desired molecule: index (int) or SMILES (string)
-identifier=405
+identifier=932
 
 # =============================================================================
 # GAFF Atom Type Numerical Assignment

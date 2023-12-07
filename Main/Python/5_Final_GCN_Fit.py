@@ -15,7 +15,7 @@ Sections:
     . Main Script
     . Plots
     
-Last edit: 2023-07-27
+Last edit: 2023-11-15
 Author: Dinis Abranches
 """
 
@@ -48,16 +48,16 @@ from skmultilearn.model_selection.iterative_stratification\
 # Force Field used for atom typing
 ffType='GAFF' # One of: "El" | "MMFF"| "GAFF"
 # Hyperparameters
-hp={'conv1_channels': 211,
-    'conv2_channels': 215,
-    'conv3_channels': 30,
-    'L2 coeff.': 0.00021626526553262046,
-    'alpha': 0.00030764796301424347,
-    'batchSize': 8}
+hp={'conv1_channels': 239,
+    'conv2_channels': 112,
+    'conv3_channels': 243,
+    'L2 coeff.': 0.00012019192186062926,
+    'alpha': 0.0024824547416921233,
+    'batchSize': 32}
 # Path to Model Folder
-modelFolder=r'C:\Users\dinis\Desktop\GSP\Main\Models'
+modelFolder=r'/path/to/Main/Models'
 # Path to the "Databases" folder
-databasesFolder=r'C:\Users\dinis\Desktop\GSP\Main\Databases'
+databasesFolder=r'/path/to/Main/Databases'
 
 # =============================================================================
 # Main Functions
@@ -165,7 +165,7 @@ class GCN_Model_SP(tensorflow.keras.models.Model):
         # Unpack architecture
         conv1_channels=architecture.get('conv1_channels')
         conv2_channels=architecture.get('conv2_channels')
-        conv3_channels=architecture.get('conv2_channels')
+        conv3_channels=architecture.get('conv3_channels')
         reg=tensorflow.keras.regularizers.L2(architecture.get('L2 coeff.'))
         ki='he_uniform'
         # Define userLayers list
@@ -316,7 +316,7 @@ with open(os.path.join(databasesFolder,
     graphSet_Test=pickle.load(f)
     graphSet_Test.apply(transforms.GCNFilter())
 # Obtain random seeds
-randomSeeds=numpy.random.randint(0,1000,1)
+randomSeeds=numpy.random.randint(0,1000000,100)
 # Initialize best metric
 bestMetric=10**3
 # Intialize loop over seeds
@@ -379,6 +379,24 @@ for seed in randomSeeds:
         labelTensor_Test=numpy.zeros((nTest,51))
         for n in range(nTest): 
             labelTensor_Test[n,:]=graphSet_Test[n].y
+        with open(os.path.join(modelFolder,
+                               ffType+'_labelTensor_Train.pkl'),'wb') as file:
+            pickle.dump(labelTensor_Train,file,pickle.HIGHEST_PROTOCOL)
+        with open(os.path.join(modelFolder,
+                               ffType+'_Y_Train.pkl'),'wb') as file:
+            pickle.dump(Y_Train,file,pickle.HIGHEST_PROTOCOL)
+        with open(os.path.join(modelFolder,
+                               ffType+'_labelTensor_Val.pkl'),'wb') as file:
+            pickle.dump(labelTensor_Val,file,pickle.HIGHEST_PROTOCOL)
+        with open(os.path.join(modelFolder,
+                               ffType+'_Y_Val.pkl'),'wb') as file:
+            pickle.dump(Y_Val,file,pickle.HIGHEST_PROTOCOL)
+        with open(os.path.join(modelFolder,
+                               ffType+'_labelTensor_Test.pkl'),'wb') as file:
+            pickle.dump(labelTensor_Test,file,pickle.HIGHEST_PROTOCOL)
+        with open(os.path.join(modelFolder,
+                               ffType+'_Y_Test.pkl'),'wb') as file:
+            pickle.dump(Y_Test,file,pickle.HIGHEST_PROTOCOL)
 
 # =============================================================================
 # Plots
@@ -404,7 +422,6 @@ plt.legend()
 plt.show()
 
 # --- Plot pred vs exp scatter
-
 v=[0,150]
 plt.plot(v,v,'--',linewidth=2,c='silver')
 plt.plot(labelTensor_Train.flatten(),
@@ -413,19 +430,6 @@ plt.plot(labelTensor_Val.flatten(),
          Y_Val.flatten(),'.r',markersize=5,label='Validation Data')
 plt.plot(labelTensor_Test.flatten(),
          Y_Test.flatten(),'.b',markersize=5,label='Testing Data')
-
-with open(os.path.join(modelFolder,ffType+'_labelTensor_Train.pkl'),'wb') as file:
-    pickle.dump(labelTensor_Train,file,pickle.HIGHEST_PROTOCOL)
-with open(os.path.join(modelFolder,ffType+'_Y_Train.pkl'),'wb') as file:
-    pickle.dump(Y_Train,file,pickle.HIGHEST_PROTOCOL)
-with open(os.path.join(modelFolder,ffType+'_labelTensor_Val.pkl'),'wb') as file:
-    pickle.dump(labelTensor_Val,file,pickle.HIGHEST_PROTOCOL)
-with open(os.path.join(modelFolder,ffType+'_Y_Val.pkl'),'wb') as file:
-    pickle.dump(Y_Val,file,pickle.HIGHEST_PROTOCOL)
-with open(os.path.join(modelFolder,ffType+'_labelTensor_Test.pkl'),'wb') as file:
-    pickle.dump(labelTensor_Test,file,pickle.HIGHEST_PROTOCOL)
-with open(os.path.join(modelFolder,ffType+'_Y_Test.pkl'),'wb') as file:
-    pickle.dump(Y_Test,file,pickle.HIGHEST_PROTOCOL)
 
 plt.xlabel(r'Exp. Sigma Profile $\rm/Å^{2}$')
 plt.ylabel(r'Pred. Sigma Profile $\rm/Å^{2}$')

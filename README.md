@@ -7,4 +7,4 @@ Repository structure:
   - Databases: graph and property database files.
   - HyperparameterSearch: hyperparameter tuning results of each GCN model.
   - Models: GCN models, train/val/test splits of final fitting, and CNN-related files.
-  - Python: main Python code used throughout the manuscript. Files are numbered in chronological order. Details and instructions included. 
+  - Python: main Python code used throughout the manuscript. Files are numbered in chronological order. Details and instructions included. A Jupyer Notebook is also included, allowing users to predict sigma profiles by providing a SMILES string.
