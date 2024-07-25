@@ -1,6 +1,10 @@
 # GSP
 
-Repository associated with the manuscript “Boosting Graph Neural Networks with Molecular Mechanics: A Case Study of Sigma Profile Prediction”.
+Repository associated with the manuscript “Boosting Graph Neural Networks with Molecular Mechanics: A Case Study of Sigma Profile Prediction”. <br />
+Citation: <br />
+[https://doi.org/10.1021/acs.jctc.3c01003](https://doi.org/10.1021/acs.jctc.3c01003) <br />
+Dinis O. Abranches, Edward J. Maginn, Yamil J. Colón. "Boosting Graph Neural Networks with Molecular Mechanics: A Case Study of Sigma Profile Prediction." J. Chem. Theory Comput. 2023, 19 (24), 9318– 9328
+ 
 
 Repository structure:
 - Main
